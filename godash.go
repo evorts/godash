@@ -224,6 +224,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if len(validationErrors) > 0 {
 		renderData.Errors = validationErrors
+		getAPI().Session().Put(r.Context(), "token", req.token)
 		if err := req.render(w, "login.html", renderData); err != nil {
 			getAPI().Logger().Log("login_handler", err.Error())
 		}
@@ -234,6 +235,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if sessionCsrf == nil || csrf[0] != sessionCsrf.(string) {
 		validationErrors["global"] = "Invalid request session"
 		renderData.Errors = validationErrors
+		getAPI().Session().Put(r.Context(), "token", req.token)
 		if err := req.render(w, "login.html", renderData); err != nil {
 			getAPI().Logger().Log("login_handler", err.Error())
 		}
@@ -250,15 +252,17 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if userFound == nil {
 		validationErrors["global"] = "User not found. Please ensure you input it correctly."
 		renderData.Errors = validationErrors
+		getAPI().Session().Put(r.Context(), "token", req.token)
 		if err := req.render(w, "login.html", renderData); err != nil {
 			getAPI().Logger().Log("login_handler", err.Error())
 		}
 		return
 	}
-	passCrypt := getAPI().Hash().Crypt(pass[0])
+	passCrypt := getAPI().Hash().Renew().Crypt(pass[0])
 	if strings.ToLower(passCrypt) != strings.ToLower(userFound.Password) {
 		validationErrors["global"] = "Invalid authentication"
 		renderData.Errors = validationErrors
+		getAPI().Session().Put(r.Context(), "token", req.token)
 		if err := req.render(w, "login.html", renderData); err != nil {
 			getAPI().Logger().Log("login_handler", err.Error())
 		}
@@ -272,6 +276,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if err := getAPI().Session().RenewToken(r.Context()); err != nil {
 		validationErrors["global"] = "Failed to process"
 		renderData.Errors = validationErrors
+		getAPI().Session().Put(r.Context(), "token", req.token)
 		if err := req.render(w, "login.html", renderData); err != nil {
 			getAPI().Logger().Log("login_handler", err.Error())
 		}

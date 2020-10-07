@@ -15,6 +15,7 @@ type Crypt struct {
 func NewCrypt(salt string) *Crypt {
 	return &Crypt{
 		sha1: sha12.New(),
+		salt: salt,
 	}
 }
 
@@ -32,4 +33,9 @@ func (c *Crypt) Crypt(value string) string {
 		return ""
 	}
 	return fmt.Sprintf("%x", c.sha1.Sum(nil))
+}
+
+func (c *Crypt) Renew() *Crypt {
+	c.sha1 = sha12.New()
+	return c
 }

@@ -12,21 +12,28 @@
                 </div>
                 <div class="card-body">
                     <form method="post">
-                        {{ .Errors.global }}
+                        {{ if .Errors.global }}
+                        <span class="badge badge-danger mb-3">{{ .Errors.global }}</span>
+                        {{ end }}
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input name="username" type="text" value="{{ .Forms.Username }}" class="form-control" placeholder="username">
-                            {{ .Errors.username }}
                         </div>
+                        {{ if .Errors.username }}
+                            <span class="badge badge-danger mb-3">{{ .Errors.username }}</span>
+                        {{ end }}
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <input name="password" type="password" value="{{ .Forms.Password }}" class="form-control" placeholder="password">
-                            {{ .Errors.password }}
                         </div>
+                        {{ if .Errors.password }}
+                            <span class="badge badge-danger mb-3">{{ .Errors.password }}</span>
+                        {{ end }}
+
                         <div class="row align-items-center remember">
                             <input name="remember" type="checkbox">Remember Me
                         </div>
