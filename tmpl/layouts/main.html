@@ -1,0 +1,68 @@
+{{define "layout"}}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- Primary Meta Tags -->
+        <meta content="noindex,nofollow" name="robots">
+        <title>{{template "title" .}}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no">
+        <link rel="shortcut icon" href="/assets/favicon.png">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&amp;display=swap" rel="stylesheet">
+
+        <!-- CSS only -->
+        <link href="/assets/styles/main.min.css" rel="stylesheet">
+        <!--Fontawesome CDN-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        {{ block "styles" . }} {{ end }}
+
+        <!-- JS, Popper.js, and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                crossorigin="anonymous"></script>
+    </head>
+    <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+            <div class="container">
+                <a class="navbar-brand navbar-brand flex-fill text-center text-lg-left pr-3 pr-sm-0" href="/">
+                    <img src="{{ .PageAttributes.LogoUrl }}" alt="{{ .PageAttributes.LogoAlt }}"/>
+                </a>
+                {{ if .LoggedIn }}
+                <a class="btn btn-primary-light" href="/logout">Logout</a>
+                {{ end }}
+            </div>
+        </nav>
+    </header>
+    <section class="pt-6" id="content">
+        {{template "content" .}}
+    </section>
+    <footer class="fixed-bottom">
+        <div class="bg-dark-primary d-md-flex p-sm-3 py-4">
+            <div class="container m-auto">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="mb-2 mt-1">
+                            <a class="fs-14 text-white" href="mailto:eco@onelabs.co">
+                                {{ .PageAttributes.ContactEmail }} |
+                            </a>
+                            <a class="fs-14 text-white" href="tel:{{ .PageAttributes.ContactPhone1 }}">
+                                {{ .PageAttributes.ContactPhone2 }}
+                            </a>
+                        </div>
+                        <div class="text-white fs-12 alamat"> {{ .PageAttributes.ContactAddress }} </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-dark">
+            <div class="col-12 text-center text-white p-3">
+                <div class="fs-12 copyright">© 2020 {{ .PageAttributes.LogoAlt }} • All rights reserved</div>
+            </div>
+        </div>
+    </footer>
+    </body>
+    </html>
+{{end}}

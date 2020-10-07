@@ -1,0 +1,32 @@
+{{ template "layout" . }}
+{{ define "title" }} {{ .PageAttributes.PageTitle }} {{ end }}
+{{ define "content" }}
+    <div class="container mb-5" id="product">
+        {{ range $group := .Groups }}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h4 class="fs-28 my-4 py-2 text-primary"> {{ $group.Name }} </h4>
+                </div>
+                <div class="row px-3 px-sm-0">
+                    {{ range $link := .Links }}
+                        <div class="col-md-4 d-flex product-item align-items-center">
+                            <div class="thumb mr-auto d-flex align-items-center">
+                                <img src="{{ $link.Icon }}" alt="{{ $link.Title }}" width="100">
+                            </div>
+                            <div class="desc ml-auto">
+                                <h5>{{ $link.Title }}</h5>
+                                <p>{{ $link.SubTitle }}</p>
+                                <a class="btn btn-primary-light"
+                                   href="{{ $link.Url }}">Visit</a>
+                                {{ if $link.GitUrl }}
+                                    <a class="btn btn-primary-light"
+                                       href="{{ $link.GitUrl }}">Git</a>
+                                {{ end }}
+                            </div>
+                        </div>
+                    {{ end }}
+                </div>
+            </div>
+        {{ end }}
+    </div>
+{{ end }}

@@ -1,0 +1,41 @@
+app:
+  port: 3500
+  salt: ""
+  # session expiration in second
+  session_expire: 3600
+  template_dir: ""
+  asset_dir: ""
+  logo:
+    url: ""
+    alt: ""
+  contact:
+    email: ""
+    phone:
+      - ""
+      - ""
+    address: ""
+# users login, combination of username and sha1 pass
+# can use https://passwordsgenerator.net/sha1-hash-generator/ to generate
+users:
+  - uname:
+    pass:
+groups:
+  - name: "Monitoring Tools"
+    links:
+      - title: ""
+        subtitle: ""
+        icon: ""
+        url: ""
+        git_url: ""
+  - name: "API Documentation"
+    links:
+      - title: "Service A"
+        subtitle: ""
+        icon: ""
+        url: ""
+        git_url: ""
+      - title: "Service B"
+        subtitle: ""
+        icon: ""
+        url: ""
+        git_url: ""
