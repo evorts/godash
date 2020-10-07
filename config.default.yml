@@ -3,6 +3,8 @@ app:
   salt: ""
   # session expiration in second
   session_expire: 3600
+  cookie_domain: ".domain.local"
+  cookie_secure: 0
   template_dir: ""
   asset_dir: ""
   logo:
@@ -17,8 +19,8 @@ app:
 # users login, combination of username and sha1 pass
 # can use https://passwordsgenerator.net/sha1-hash-generator/ to generate
 users:
-  - uname:
-    pass:
+  - uname: ""
+    pass: ""
 groups:
   - name: "Monitoring Tools"
     links:
