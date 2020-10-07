@@ -17,9 +17,9 @@
                                 <h5>{{ $link.Title }}</h5>
                                 <p>{{ $link.SubTitle }}</p>
                                 <a class="btn btn-primary-light"
-                                   href="{{ $link.Url }}">Visit</a>
+                                   href="{{ $link.Url }}" target="_blank">Visit</a>
                                 {{ if $link.GitUrl }}
-                                    <a class="btn btn-primary-light"
+                                    <a class="btn btn-primary-light" target="_blank"
                                        href="{{ $link.GitUrl }}">Git</a>
                                 {{ end }}
                             </div>

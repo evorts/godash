@@ -34,7 +34,7 @@ type Link struct {
 	Title    string `yaml:"title"`
 	SubTitle string `yaml:"subtitle"`
 	Icon     string `yaml:"icon"`
-	Url      string `yaml:"href"`
+	Url      string `yaml:"url"`
 	GitUrl   string `yaml:"git_url"`
 }
 
