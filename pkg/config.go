@@ -1,8 +1,10 @@
 package pkg
 
 import (
+	"errors"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"os"
 	"time"
 )
 
@@ -15,6 +17,7 @@ type App struct {
 	TemplateDirectory string `yaml:"template_dir"`
 	AssetDirectory string `yaml:"asset_dir"`
 	Logo struct {
+		FavIcon string `yaml:"favicon"`
 		Url string `yaml:"url"`
 		Alt string `yaml:"alt"`
 	} `yaml:"logo"`
@@ -50,7 +53,7 @@ type Configuration struct {
 }
 
 type config struct {
-	filename string
+	filename []string
 	data *Configuration
 }
 
@@ -60,7 +63,7 @@ type ConfigManager interface {
 	Reload() error
 }
 
-func NewConfig(filename string) ConfigManager {
+func NewConfig(filename ...string) ConfigManager {
 	return &config{
 		filename: filename,
 		data:      nil,
@@ -100,8 +103,28 @@ func (c *config) Reload() (err error) {
 	return
 }
 
+// fileExists checks if a file exists and is not a directory before we
+// try using it to prevent further errors.
+func (c *config) fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
+
 func (c *config) read() (*Configuration, error) {
-	cfg, err := ioutil.ReadFile(c.filename)
+	fName := ""
+	for _, f := range c.filename {
+		if c.fileExists(f) {
+			fName = f
+			break
+		}
+	}
+	if len(fName) < 1 {
+		return nil, errors.New("no configuration file found")
+	}
+	cfg, err := ioutil.ReadFile(fName)
 	if err != nil {
 		return nil, err
 	}
