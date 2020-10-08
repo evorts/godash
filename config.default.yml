@@ -8,6 +8,7 @@ app:
   template_dir: ""
   asset_dir: ""
   logo:
+    favicon: "/assets/favicon.png"
     url: ""
     alt: ""
   contact:
