@@ -57,6 +57,7 @@ type config struct {
 type ConfigManager interface {
 	GetConfig() *Configuration
 	Initiate() error
+	Reload() error
 }
 
 func NewConfig(filename string) ConfigManager {
@@ -94,8 +95,9 @@ func (c *config) Initiate() error {
 	return nil
 }
 
-func (c *config) Reload() {
-	c.data, _ = c.read()
+func (c *config) Reload() (err error) {
+	c.data, err = c.read()
+	return
 }
 
 func (c *config) read() (*Configuration, error) {

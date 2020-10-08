@@ -156,10 +156,21 @@ func main() {
 	o.HandleFunc("/login", loginHandler)
 	o.HandleFunc("/logout", logoutHandler)
 	o.HandleFunc("/not-found", notFoundHandler)
+	o.HandleFunc("/reload", reloadHandler)
 	api.Logger().Log("started", "Dashboard app started.")
 	if err := http.ListenAndServe(fmt.Sprintf(":%d", api.Config().GetConfig().App.Port), sm.LoadAndSave(o)); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func reloadHandler(w http.ResponseWriter, r *http.Request) {
+	getAPI().Logger().Log("reload_handler", "request received")
+	req := Request{w: w, r: r}
+	if err := getAPI().Config().Reload(); err != nil {
+		req.renderContent("Error reloading")
+		return
+	}
+	req.renderContent("Reloading done.")
 }
 
 func dashboardHandler(w http.ResponseWriter, r *http.Request) {
@@ -167,7 +178,8 @@ func dashboardHandler(w http.ResponseWriter, r *http.Request) {
 	req := Request{w: w, r: r}
 	// check if the request already authenticated
 	rp := r.URL.Path
-	if rp != "/" && rp != "/login" && rp != "/logout" && !strings.HasPrefix(rp, "/assets/") {
+	if rp != "/" && rp != "/login" && rp != "/logout" && rp != "/reload" &&
+		!strings.HasPrefix(rp, "/assets/") {
 		http.Redirect(w, r, "/not-found", http.StatusPermanentRedirect)
 		return
 	}
