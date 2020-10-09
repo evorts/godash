@@ -9,22 +9,22 @@ import (
 )
 
 type App struct {
-	Port int `yaml:"port"`
-	Salt string `yaml:"salt"`
+	Port              int           `yaml:"port"`
+	Salt              string        `yaml:"salt"`
 	SessionExpiration time.Duration `yaml:"session_expire"`
-	CookieDomain string `yaml:"cookie_domain"`
-	CookieSecure int `yaml:"cookie_secure"`
-	TemplateDirectory string `yaml:"template_dir"`
-	AssetDirectory string `yaml:"asset_dir"`
-	Logo struct {
+	CookieDomain      string        `yaml:"cookie_domain"`
+	CookieSecure      int           `yaml:"cookie_secure"`
+	TemplateDirectory string        `yaml:"template_dir"`
+	AssetDirectory    string        `yaml:"asset_dir"`
+	Logo              struct {
 		FavIcon string `yaml:"favicon"`
-		Url string `yaml:"url"`
-		Alt string `yaml:"alt"`
+		Url     string `yaml:"url"`
+		Alt     string `yaml:"alt"`
 	} `yaml:"logo"`
 	Contact struct {
-		Email string `yaml:"email"`
-		Phone []string `yaml:"phone"`
-		Address string `yaml:"address"`
+		Email   string   `yaml:"email"`
+		Phone   []string `yaml:"phone"`
+		Address string   `yaml:"address"`
 	} `yaml:"contact"`
 }
 
@@ -43,18 +43,19 @@ type Link struct {
 
 type Group struct {
 	Name  string `yaml:"name"`
+	Slug  string `yaml:"-"`
 	Links []Link `yaml:"links"`
 }
 
 type Configuration struct {
-	App App `yaml:"app"`
-	Users  []User `yaml:"users"`
+	App    App     `yaml:"app"`
+	Users  []User  `yaml:"users"`
 	Groups []Group `yaml:"groups"`
 }
 
 type config struct {
 	filename []string
-	data *Configuration
+	data     *Configuration
 }
 
 type ConfigManager interface {
@@ -66,7 +67,7 @@ type ConfigManager interface {
 func NewConfig(filename ...string) ConfigManager {
 	return &config{
 		filename: filename,
-		data:      nil,
+		data:     nil,
 	}
 }
 

@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -79,6 +80,7 @@ func (req Request) render(w http.ResponseWriter, templateName string, data Rende
 	if data.PageAttributes == nil {
 		data.PageAttributes = make(map[string]string, 0)
 	}
+	data.PageAttributes["Year"] = strconv.Itoa(time.Now().Year())
 	data.PageAttributes["FavIcon"] = getAPI().Config().GetConfig().App.Logo.FavIcon
 	data.PageAttributes["LogoUrl"] = getAPI().Config().GetConfig().App.Logo.Url
 	data.PageAttributes["LogoAlt"] = getAPI().Config().GetConfig().App.Logo.Alt

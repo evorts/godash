@@ -19,9 +19,7 @@
         {{ block "styles" . }} {{ end }}
 
         <!-- JS, Popper.js, and jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-                crossorigin="anonymous"></script>
+        {{ block "scripts" . }} {{ end }}
     </head>
     <body>
     <header>
@@ -31,7 +29,8 @@
                     <img src="{{ .PageAttributes.LogoUrl }}" alt="{{ .PageAttributes.LogoAlt }}"/>
                 </a>
                 {{ if .LoggedIn }}
-                <a class="btn btn-primary-light" href="/logout">Logout</a>
+                    {{ block "menu" . }}{{ end }}
+                    <a class="btn btn-primary-light" href="/logout">Logout</a>
                 {{ end }}
             </div>
         </nav>
@@ -39,7 +38,7 @@
     <section class="pt-6" id="content" style="margin-bottom: 100px">
         {{template "content" .}}
     </section>
-    <footer class="fixed-bottom">
+    <footer>
         <div class="bg-dark-primary d-md-flex p-sm-3 py-4">
             <div class="container m-auto">
                 <div class="row">
@@ -59,7 +58,7 @@
         </div>
         <div class="bg-dark">
             <div class="col-12 text-center text-white p-3">
-                <div class="fs-12 copyright">© 2020 {{ .PageAttributes.LogoAlt }} • All rights reserved</div>
+                <div class="fs-12 copyright">© {{ .PageAttributes.Year }} {{ .PageAttributes.LogoAlt }} • All rights reserved</div>
             </div>
         </div>
     </footer>

@@ -1,11 +1,30 @@
 {{ template "layout" . }}
 {{ define "title" }} {{ .PageAttributes.PageTitle }} {{ end }}
+{{ define "scripts" }}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+{{ end }}
+{{ define "menu" }}
+    <div class="nav-item dropdown">
+        <a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+           aria-haspopup="true" aria-expanded="false">Shortcut Menu</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {{ range $group := .Groups }}
+                <a class="dropdown-item" href="#{{ $group.Name }}"> {{ $group.Name }} </a>
+            {{ end }}
+        </div>
+    </div>
+{{ end }}
 {{ define "content" }}
-    <div class="container mb-5" id="product">
+    <div class="container mb-5" id="product" style="min-height: 550px;">
         {{ range $group := .Groups }}
             <div class="row">
                 <div class="col-12 text-center">
-                    <h4 class="fs-28 my-4 py-2 text-primary"> {{ $group.Name }} </h4>
+                    <h4 id="{{ $group.Name }}" class="fs-28 my-4 py-2 text-primary"> {{ $group.Name }} </h4>
                 </div>
                 <div class="row px-3 px-sm-0">
                     {{ range $link := .Links }}
