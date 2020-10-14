@@ -3,3 +3,4 @@
 config.yml
 config.docker.yml
 config.live.yml
+.DS_Store
